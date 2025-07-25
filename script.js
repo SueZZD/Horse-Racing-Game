@@ -1,6 +1,4 @@
-
-const store = {
-    state: {
+const state = {
         horses: [],
         raceSchedule: [],
         currentRaceIndex: 0,
@@ -23,77 +21,84 @@ const store = {
             "Frances Allen", "Marissa Mayer", "Karen Spärck Jones", "Evelyn Boyd Granville",
             "Adele Goldberg", "Betty Holberton", "Bold Pilot", "Sebastian Vettel"
         ]
-    },
-    mutations: {
-        setHorses(horses) {
-            store.state.horses = horses;
+    }
+
+    const setHorses =  (horses) => {
+        state.horses = horses;
             renderHorseList();
-        },
-        setRaceSchedule(schedule) {
-            store.state.raceSchedule = schedule;
-            store.state.currentRaceIndex = 0;
-            store.state.raceResults = [];
+    }
+
+    const setRaceSchedule = (schedule) => {
+        state.raceSchedule = schedule;
+        state.currentRaceIndex = 0;
+            state.raceResults = [];
             renderProgram();
             updateRaceInfo();
-        },
-        nextRace() {
-            store.state.currentRaceIndex++;
+    }
+
+    const nextRace = () => {
+        state.currentRaceIndex++;
             updateRaceInfo();
-        },
-        addRaceResult(result) {
-            store.state.raceResults.push(result);
+    }
+
+    const addRaceResult = (result) => {
+        state.raceResults.push(result);
             renderResults();
-        },
-        setRaceRunning(status) {
-            store.state.isRaceRunning = status;
+    }
+
+    const setRaceRunning = (status) => {
+        state.isRaceRunning = status;
             updateButtonStates();
-        },
-        setAnimationFrameId(id) {
-            store.state.animationFrameId = id;
-        },
-        setRaceStartTime(time) {
-            store.state.raceStartTime = time;
-        },
-        setLastFrameTime(time) { 
-            store.state.lastFrameTime = time;
-        },
-        resetRaceState() {
-            store.state.currentRaceIndex = 0;
-            store.state.raceResults = [];
-            store.state.isRaceRunning = false;
-            if (store.state.animationFrameId) {
-                cancelAnimationFrame(store.state.animationFrameId);
-                store.state.animationFrameId = null;
-            }
-            store.state.raceStartTime = 0;
-            store.state.lastFrameTime = 0; 
-            renderResults(); 
-            updateRaceInfo();
-            updateButtonStates();
-            clearRaceTrack();
+    }
+
+    const setAnimationFrameId = (id) => {
+        state.animationFrameId = id;
+    }
+
+    const setRaceStartTime = (time) => {
+        state.raceStartTime = time;
+    }
+
+    const setLastFrameTime = (time) => {
+        state.lastFrameTime = time;
+    }
+
+    const resetRaceState = () => {
+        state.currentRaceIndex = 0;
+        state.raceResults = [];
+        state.isRaceRunning = false;
+        if (state.animationFrameId) {
+            cancelAnimationFrame(state.animationFrameId);
+            state.animationFrameId = null;
         }
-    },
-    getters: {
-        getCurrentRace() {
-            return store.state.raceSchedule[store.state.currentRaceIndex];
-        },
-        getHorsesInCurrentRace() {
-            const currentRace = store.getters.getCurrentRace(); 
+        state.raceStartTime = 0;
+        state.lastFrameTime = 0; 
+        renderResults(); 
+        updateRaceInfo();
+        updateButtonStates();
+        clearRaceTrack();
+    }
+
+    const getCurrentRace = () => {
+        return state.raceSchedule[state.currentRaceIndex];
+    }
+
+    const getHorsesInCurrentRace = () => {
+         const currentRace = getCurrentRace(); 
             if (!currentRace || !Array.isArray(currentRace.horseIds)) {
                 console.warn("Current race or its horse IDs are not valid:", currentRace);
                 return [];
             }
             return currentRace.horseIds
-                .map(id => store.state.horses.find(h => h.id === id))
+                .map(id => state.horses.find(h => h.id === id))
                 .filter(horse => horse !== undefined); 
-        },
-        isLastRace() {
-            return store.state.currentRaceIndex >= store.state.raceSchedule.length - 1;
-        }
     }
-};
 
-const horseListBody = document.getElementById('horseListBody');
+    const isLastRace = () => {
+        return currentRaceIndex >= raceSchedule.length - 1;
+    }
+
+    const horseListBody = document.getElementById('horseListBody');
 const generateProgramBtn = document.getElementById('generateProgramBtn');
 const startRaceBtn = document.getElementById('startRaceBtn');
 const pauseRaceBtn = document.getElementById('pauseRaceBtn');
@@ -125,20 +130,20 @@ function initializeHorses() {
     for (let i = 1; i <= 20; i++) {
         horses.push({
             id: i,
-            name: store.state.horseNames[i - 1] || `At ${i}`, 
+            name: state.horseNames[i - 1] || `At ${i}`, 
             condition: Math.floor(Math.random() * 100) + 1, 
-            color: store.state.horseColors[i - 1],
+            color: state.horseColors[i - 1],
             position: 0, 
             speed: 0, 
             finishTime: null 
         });
     }
-    store.mutations.setHorses(horses);
+    setHorses(horses);
 }
 
 function renderHorseList() {
     horseListBody.innerHTML = '';
-    store.state.horses.forEach(horse => {
+    state.horses.forEach(horse => {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${horse.name}</td>
@@ -150,7 +155,7 @@ function renderHorseList() {
 
 function renderProgram() {
     programDetails.innerHTML = '';
-    store.state.raceSchedule.forEach((race, index) => {
+    state.raceSchedule.forEach((race, index) => {
         const raceDiv = document.createElement('div');
         raceDiv.className = 'mb-4';
         raceDiv.innerHTML = `
@@ -164,7 +169,7 @@ function renderProgram() {
                 </thead>
                 <tbody>
                     ${race.horseIds.map((horseId, pos) => {
-                        const horse = store.state.horses.find(h => h.id === horseId);
+                        const horse = state.horses.find(h => h.id === horseId);
                         return `
                             <tr>
                                 <td>${pos + 1}</td>
@@ -181,12 +186,12 @@ function renderProgram() {
 
 function renderResults() {
     resultsDetails.innerHTML = '';
-    if (store.state.raceResults.length === 0) {
+    if (state.raceResults.length === 0) {
         resultsDetails.innerHTML = '<p class="text-gray-500">Henüz sonuç yok.</p>';
         return;
     }
 
-    store.state.raceResults.forEach((raceResult, index) => {
+    state.raceResults.forEach((raceResult, index) => {
         const resultDiv = document.createElement('div');
         resultDiv.className = 'mb-4';
         resultDiv.innerHTML = `
@@ -201,7 +206,7 @@ function renderResults() {
                 </thead>
                 <tbody>
                     ${raceResult.results.map((result, pos) => {
-                        const horse = store.state.horses.find(h => h.id === result.horseId);
+                        const horse = state.horses.find(h => h.id === result.horseId);
                         return `
                             <tr>
                                 <td>${pos + 1}</td>
@@ -218,13 +223,13 @@ function renderResults() {
 }
 
 function updateRaceInfo() {
-    const currentRace = store.getters.getCurrentRace(); 
+    const currentRace = getCurrentRace(); 
     if (currentRace) {
-        currentRaceInfo.textContent = `Tur ${store.state.currentRaceIndex + 1} - ${currentRace.distance}m`;
-        const nextRace = store.state.raceSchedule[store.state.currentRaceIndex + 1];
+        currentRaceInfo.textContent = `Tur ${state.currentRaceIndex + 1} - ${currentRace.distance}m`;
+        const nextRace = state.raceSchedule[state.currentRaceIndex + 1];
         if (nextRace) {
             nextRaceInfo.textContent = `Sonraki Tur: ${nextRace.distance}m`;
-        } else if (store.state.currentRaceIndex === store.state.raceSchedule.length) {
+        } else if (state.currentRaceIndex === state.raceSchedule.length) {
              nextRaceInfo.textContent = 'Tüm yarışlar tamamlandı!';
         } else {
             nextRaceInfo.textContent = '';
@@ -236,9 +241,9 @@ function updateRaceInfo() {
 }
 
 function updateButtonStates() {
-    const hasSchedule = store.state.raceSchedule.length > 0;
-    const isRunning = store.state.isRaceRunning;
-    const allRacesFinished = store.state.currentRaceIndex >= store.state.raceSchedule.length;
+    const hasSchedule = state.raceSchedule.length > 0;
+    const isRunning = state.isRaceRunning;
+    const allRacesFinished = state.currentRaceIndex >= state.raceSchedule.length;
 
     generateProgramBtn.disabled = isRunning;
     startRaceBtn.disabled = !hasSchedule || isRunning || allRacesFinished;
@@ -250,11 +255,11 @@ function clearRaceTrack() {
 }
 
 function generateRaceProgram() {
-    store.mutations.resetRaceState(); 
+    resetRaceState(); 
     const schedule = [];
-    const allHorseIds = store.state.horses.map(h => h.id);
+    const allHorseIds = state.horses.map(h => h.id);
 
-    store.state.raceDistances.forEach(distance => {
+    state.raceDistances.forEach(distance => {
         
         const shuffledHorses = [...allHorseIds].sort(() => 0.5 - Math.random());
         const selectedHorseIds = shuffledHorses.slice(0, 10);
@@ -265,31 +270,31 @@ function generateRaceProgram() {
             results: [] 
         });
     });
-    store.mutations.setRaceSchedule(schedule);
+    setRaceSchedule(schedule);
     updateButtonStates();
 }
 
 function startRace() {
-    if (store.state.isRaceRunning) return;
-    if (store.state.currentRaceIndex >= store.state.raceSchedule.length) {
+    if (state.isRaceRunning) return;
+    if (state.currentRaceIndex >= state.raceSchedule.length) {
         displayMessageBox('Tüm yarışlar tamamlandı. Yeni bir program oluşturun.');
         return;
     }
 
-    store.mutations.setRaceRunning(true);
-    const currentRace = store.getters.getCurrentRace(); 
+    setRaceRunning(true);
+    const currentRace =getCurrentRace(); 
     if (!currentRace) {
         console.error("Yarış başlatılırken mevcut yarış bulunamadı.");
-        store.mutations.setRaceRunning(false); 
+        setRaceRunning(false); 
         return;
     }
 
     clearRaceTrack();
-    const horsesInRace = store.getters.getHorsesInCurrentRace(); 
+    const horsesInRace = getHorsesInCurrentRace(); 
 
     if (!Array.isArray(horsesInRace)) {
         console.error("Hata: horsesInRace bir dizi değil. Gelen değer:", horsesInRace);
-        store.mutations.setRaceRunning(false); 
+        setRaceRunning(false); 
         return; 
     }
 
@@ -311,61 +316,58 @@ function startRace() {
         horse.finishTime = null;
     });
 
-    store.mutations.setRaceStartTime(performance.now());
-    store.mutations.setLastFrameTime(performance.now()); 
-    store.mutations.setAnimationFrameId(requestAnimationFrame(raceAnimationLoop)); 
+    setRaceStartTime(performance.now());
+    setLastFrameTime(performance.now()); 
+    setAnimationFrameId(requestAnimationFrame(raceAnimationLoop)); 
 }
 
 function pauseRace() {
-    if (store.state.animationFrameId) {
-        cancelAnimationFrame(store.state.animationFrameId);
-        store.mutations.setAnimationFrameId(null);
+    if (state.animationFrameId) {
+        cancelAnimationFrame(state.animationFrameId);
+        setAnimationFrameId(null);
     }
-    store.mutations.setRaceRunning(false);
+    setRaceRunning(false);
 }
 
 function raceAnimationLoop(currentTime) {
-    if (!store.state.isRaceRunning) return;
+    if (!state.isRaceRunning) return;
 
-    const currentRace = store.getters.getCurrentRace(); 
+    const currentRace = getCurrentRace(); 
     if (!currentRace) return; 
 
-    const deltaTime = (currentTime - store.state.lastFrameTime) / 1000; 
-    store.mutations.setLastFrameTime(currentTime); 
+    const deltaTime = (currentTime - state.lastFrameTime) / 1000; 
+    setLastFrameTime(currentTime); 
 
     const raceDistance = currentRace.distance;
     let allHorsesFinished = true;
 
-    const horsesInRace = store.getters.getHorsesInCurrentRace(); 
+    const horsesInRace = getHorsesInCurrentRace(); 
 
     
     if (!Array.isArray(horsesInRace)) {
         console.error("Hata: horsesInRace bir dizi değil. Gelen değer:", horsesInRace);
-        pauseRace(); // Stop the animation loop if data is corrupted
+        pauseRace(); 
         return;
     }
 
     horsesInRace.forEach(horse => {
         if (horse.finishTime === null) {
-            // Calculate speed based on condition and a random factor
           
-            const baseSpeed = (horse.condition / 100) * 60 + 10; // m/s, adjust as needed
-            const randomFactor = (Math.random() * 2 - 1) * 5; // -5 to +5 m/s
-            horse.speed = Math.max(1, baseSpeed + randomFactor); // Ensure speed is positive
+            const baseSpeed = (horse.condition / 100) * 60 + 10; 
+            const randomFactor = (Math.random() * 2 - 1) * 5; 
+            horse.speed = Math.max(1, baseSpeed + randomFactor); 
 
-            // Update horse position based on deltaTime
             const distanceIncrement = horse.speed * deltaTime;
-            horse.position += (distanceIncrement / raceDistance) * 100; // Position as percentage of track
+            horse.position += (distanceIncrement / raceDistance) * 100;
 
-            // Ensure position doesn't exceed 100% and doesn't go backward
             if (horse.position >= 100) {
                 horse.position = 100;
-                horse.finishTime = (currentTime - store.state.raceStartTime) / 1000; // Total elapsed time for finish
+                horse.finishTime = (currentTime - state.raceStartTime) / 1000; 
             } else {
                 allHorsesFinished = false;
             }
 
-            // Update horse element position using left
+           
             const horseEl = document.getElementById(`horse-${horse.id}`);
             if (horseEl) {
                 horseEl.style.left = `${horse.position}%`;
@@ -374,35 +376,33 @@ function raceAnimationLoop(currentTime) {
     });
 
     if (allHorsesFinished) {
-        // Race finished
-        pauseRace(); // Stop animation
+        pauseRace(); 
         const sortedResults = horsesInRace
             .filter(h => h.finishTime !== null)
             .sort((a, b) => a.finishTime - b.finishTime)
             .map(h => ({ horseId: h.id, time: h.finishTime }));
 
-        store.mutations.addRaceResult({
+        addRaceResult({
             distance: currentRace.distance,
             results: sortedResults
         });
 
-        // Move to next race or end
-        if (!store.getters.isLastRace()) {
+        if (!isLastRace()) {
             setTimeout(() => {
-                store.mutations.nextRace();
-                updateButtonStates(); // Re-enable start button for next race
-            }, 2000); // Wait 2 seconds before enabling for next race
+                nextRace();
+                updateButtonStates(); 
+            }, 2000); 
         } else {
             currentRaceInfo.textContent = 'Tüm yarışlar tamamlandı!';
             nextRaceInfo.textContent = '';
-            updateButtonStates(); // Disable start button
+            updateButtonStates(); 
         }
 
     } else {
-        store.mutations.setAnimationFrameId(requestAnimationFrame(raceAnimationLoop));
+        setAnimationFrameId(requestAnimationFrame(raceAnimationLoop));
     }
 }
 
-// --- Initial Setup ---
+
 initializeHorses();
-updateButtonStates(); // Set initial button states
+updateButtonStates(); 
