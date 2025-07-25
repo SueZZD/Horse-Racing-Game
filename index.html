@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>At Yarışı Oyunu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome CDN eklendi -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="container">
+        <div class="header">
+            <h1>At Yarışı Oyunu</h1>
+            <div class="button-group">
+                <button id="generateProgramBtn" class="btn-generate">Program Oluştur</button>
+                <button id="startRaceBtn" class="btn-start" disabled>Yarışı Başlat</button>
+                <button id="pauseRaceBtn" class="btn-pause" disabled>Yarışı Duraklat</button>
+            </div>
+        </div>
+
+        <!-- Horse List Panel -->
+        <div class="panel horse-list-panel">
+            <h2 class="text-xl font-bold mb-4 text-gray-700">At Listesi</h2>
+            <div class="max-h-96 overflow-y-auto">
+                <table class="list-table">
+                    <thead>
+                        <tr>
+                            <th>Adı</th>
+                            <th>Kondisyon</th>
+                        </tr>
+                    </thead>
+                    <tbody id="horseListBody">
+                        <!-- Horse list will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Race Track Container -->
+        <div class="race-track-container">
+            <div id="currentRaceInfo" class="race-info">Yarış Programı Oluşturulmadı</div>
+            <div class="race-track flex-grow">
+                <!-- Race lanes will be populated here -->
+                <div class="finish-line"></div>
+            </div>
+            <div id="nextRaceInfo" class="race-info text-sm text-gray-500"></div>
+        </div>
+
+        <!-- Program and Results Panel -->
+        <div class="panel program-results-panel">
+            <div class="program-section">
+                <h3 class="text-lg font-bold mb-3 text-gray-700">Yarış Programı</h3>
+                <div id="programDetails" class="max-h-48 overflow-y-auto">
+                    <!-- Race program details will be populated here -->
+                </div>
+            </div>
+            <div class="results-section">
+                <h3 class="text-lg font-bold mb-3 text-gray-700">Yarış Sonuçları</h3>
+                <div id="resultsDetails" class="max-h-48 overflow-y-auto">
+                    <!-- Race results will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Message Box -->
+    <div id="messageBox" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
+            <p id="messageBoxContent" class="text-lg font-semibold mb-4"></p>
+            <button id="messageBoxCloseBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-200">Tamam</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
