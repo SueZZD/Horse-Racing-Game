@@ -1,33 +1,33 @@
 # Horse-Racing-Game
-Bu proje, HTML, CSS ve JavaScript kullanarak geliştirilmiş etkileşimli bir at yarışı simülasyonudur. Kullanıcıların yarış programları oluşturmasına, yarışları başlatmasına ve gerçek zamanlı olarak atların hareketini izlemesine olanak tanır.
+This project is an interactive horse racing simulation developed using HTML, CSS, and JavaScript. It allows users to create race programs, start races, and observe the horses' movement in real-time.
 
-# Özellikler
-Dinamik Yarış Programı Oluşturma: Her yarış için rastgele atlar ve mesafelerle yeni bir program oluşturun.
+# Features
+Dynamic Race Program Generation: Create new race programs with random horses and distances for each race.
 
-Gerçek Zamanlı Animasyon: Atların parkurda ilerlemesini akıcı animasyonlarla izleyin.
+Real-Time Animation: Watch horses progress on the track with smooth animations.
 
-Renkli At Figürleri: Font Awesome ikonları kullanılarak her atın rengi dinamik olarak belirlenir ve gösterilir.
+Colored Horse Figures: Horse colors are dynamically determined and displayed using Font Awesome icons.
 
-Yarış Kontrolleri: Yarışları başlatma ve duraklatma imkanı.
+Race Controls: Ability to start and pause races.
 
-Anlık Sonuçlar: Her yarış tamamlandığında sonuçları (pozisyon ve süre) görüntüleyin.
+Instant Results: View results (position and time) after each race is completed.
 
-Duyarlı Tasarım: Uygulama, farklı ekran boyutlarına uyum sağlayacak şekilde tasarlanmıştır.
+Responsive Design: The application is designed to adapt to different screen sizes.
 
-# Kullanılan Teknolojiler
-HTML5: Uygulamanın yapısal iskeleti.
+# Technologies Used
+HTML5: The structural skeleton of the application.
 
-CSS3 (Tailwind CSS): Modern ve duyarlı bir kullanıcı arayüzü için stil.
+CSS3 (Tailwind CSS): Styling for a modern and responsive user interface.
 
-JavaScript (Vanilla JS): Uygulamanın tüm dinamik işlevselliği ve durum yönetimi.
+JavaScript (Vanilla JS): All dynamic functionality and state management of the application.
 
-Font Awesome: At figürleri için vektör ikonları.
+Font Awesome: Vector icons for horse figures.
 
-# Gelecekteki İyileştirmeler
-Daha gelişmiş at animasyonları.
+# Future Enhancements
+More advanced horse animations.
 
-Kullanıcı profilleri ve geçmiş yarış kayıtları.
+User profiles and past race records.
 
-Farklı parkur tasarımları.
+Different track designs.
 
-Ses efektleri ve müzik.
+Sound effects and music.
